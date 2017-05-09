@@ -2,6 +2,10 @@
 # system.prop for OnePlus2
 #
 
+# Device
+ro.build.product=OnePlus2
+ro.product.device=OnePlus2
+
 # Audio
 audio.deep_buffer.media=true
 audio.offload.buffer.size.kb=32
