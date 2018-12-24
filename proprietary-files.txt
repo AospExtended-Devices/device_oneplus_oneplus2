@@ -38,7 +38,7 @@ etc/silence_short.wav
 # Bluetooth - OxygenOS 3.6.0
 bin/btnvtool:vendor/bin/btnvtool
 bin/hci_qcomm_init:vendor/bin/hci_qcomm_init
-bin/wcnss_filter:vendor/bin/wcnss_filter
+vendor/bin/wcnss_filter|65c276e8ed95b55d337534411add48806e034a84
 etc/firmware/nvm_tlv.bin:vendor/firmware/nvm_tlv.bin
 etc/firmware/nvm_tlv_1.3.bin:vendor/firmware/nvm_tlv_1.3.bin
 etc/firmware/nvm_tlv_2.1.bin:vendor/firmware/nvm_tlv_2.1.bin
@@ -231,28 +231,17 @@ vendor/lib/hw/gatekeeper.msm8994.so
 vendor/lib64/hw/gatekeeper.msm8994.so
 
 # GPS
-bin/loc_launcher:vendor/bin/loc_launcher
-etc/permissions/com.qti.location.sdk.xml
-etc/permissions/com.qualcomm.location.xml
-framework/com.qti.location.sdk.jar|ef91b72b4d99f9666a6699e12a095e66caa3b490
 -lib64/libloc_api_v02.so
 -lib64/libloc_ds_api.so
--priv-app/com.qualcomm.location/com.qualcomm.location.apk|ef867b7fcf6458696f082aa784d082e4531bc489
 vendor/lib64/hw/flp.default.so
-vendor/lib64/libalarmservice_jni.so
 vendor/lib64/libdataitems.so
 vendor/lib64/libflp.so
 vendor/lib64/libgeofence.so
 vendor/lib64/libizat_core.so
 vendor/lib64/liblbs_core.so
 vendor/lib64/liblocationservice.so
-vendor/lib64/liblocationservice_glue.so
 vendor/lib64/liblowi_client.so
-vendor/lib64/liblowi_wifihal.so
-vendor/lib64/libquipc_os_api.so
 vendor/lib64/libulp2.so
-vendor/lib64/libxtadapter.so
-vendor/lib64/libxtwifi_ulp_adaptor.so
 
 # Graphics - kanged from Angler OPM3.171019.019
 vendor/lib/egl/eglSubDriverAndroid.so|b88e4972d259e1e518793aa8fb9ab9ce7b574137
@@ -272,7 +261,6 @@ vendor/lib/libgsl.so|b90e66e879dfee14997282358ca4cf9cd3cbee83
 vendor/lib/libllvm-glnext.so|18ecddeb137e38ca12563a2b3a39dd2f6df1f68b
 vendor/lib/libllvm-qcom.so|ab8604edbedb9db19ac9f0cfbeb4473adf20b2c5
 vendor/lib/libllvm-qgl.so|ffd2e9c41d8976bf259b6463a1690a516daa458f
-vendor/lib/libmm-disp-apis.so|5475bf3d21201ce75597202ce81c4b15ce5b6868
 vendor/lib/librs_adreno.so|bb1d5cb84f14ed18fcbfb4815692cb196e44f180
 vendor/lib/librs_adreno_sha1.so|be8a817743950dac6e22b50cbd9657c2d35c35f2
 vendor/lib/libscale.so|9c1044395f1a93b10d3f85ce3123a73676b1bac5
@@ -293,7 +281,6 @@ vendor/lib64/libgsl.so|e6435ecf1baae08408a0cc43e1568ce42f1ddb56
 vendor/lib64/libllvm-glnext.so|abbf71eceb4048c63741cc43f2c15d4f8034bffa
 vendor/lib64/libllvm-qcom.so|10fe39e71615629bb5af03794fd0a970f4b700fc
 vendor/lib64/libllvm-qgl.so|192a30d29c1f0c5e2a6f38ca3df58118be85f346
-vendor/lib64/libmm-disp-apis.so|157a9d0e3229ae53ecae7a0dcf7cf9762804ff7f
 vendor/lib64/librs_adreno.so|18e913b6d8f79e4b8563a8c8a0b2475e609d4813
 vendor/lib64/librs_adreno_sha1.so|ef430803f5b7623d774166d7c6130012f5f24845
 vendor/lib64/libscale.so|248355dab3b68ad2fa320b173580cdf9410bdc66
@@ -369,15 +356,18 @@ vendor/lib/libdisp-aba.so
 vendor/lib/libmm-abl-oem.so
 -vendor/lib/libmm-abl.so
 vendor/lib/libmm-als.so
+vendor/lib/libmm-disp-apis.so
 vendor/lib/libmm-qdcm.so
 vendor/lib64/libdisp-aba.so
 vendor/lib64/libmm-abl-oem.so
 -vendor/lib64/libmm-abl.so
+vendor/lib64/libmm-disp-apis.so
 vendor/lib64/libmm-als.so
 vendor/lib64/libmm-qdcm.so
 
 # QMI - OxygenOS 3.6.0
 bin/irsc_util:vendor/bin/irsc_util
+etc/permissions/qti_libpermissions.xml|ef3c88495f2f61a2d16e1445113a9d80f8db0e0a
 etc/permissions/qti_permissions.xml
 -vendor/lib/libdiag.so
 vendor/lib/libdsi_netctrl.so
@@ -415,7 +405,7 @@ vendor/lib64/libsmemlog.so
 # Radio - OxygenOS 3.6.0 + OxygenOS 5.0 and OB30/OB21 + MIUI v6.11.24
 -app/datastatusnotification/datastatusnotification.apk|deb8d063001a59b68c63c19bb437354d4396fe4b
 -app/QtiTelephonyService/QtiTelephonyService.apk|880d5c85178c4b3dd809a64e25f6108437c136fc
-bin/netmgrd:vendor/bin/netmgrd|01889f0a508a8de89df050d7e4cf65a4e944f9ce
+bin/netmgrd:vendor/bin/netmgrd|6ca8f2e16d3078848808787c9a81cfc78dc27c58
 bin/qmuxd:vendor/bin/qmuxd
 bin/radish:vendor/bin/radish
 bin/rfs_access:vendor/bin/rfs_access
@@ -447,39 +437,6 @@ vendor/lib64/libsettings.so|3e459839d90a27d2eb23a3c9d030f46a5c4bfaf1
 vendor/lib64/libsystem_health_mon.so
 vendor/lib64/libxml.so
 vendor/qcril.db
-
-# Radio - IMS - MIUI Hydrogen 7.7.6 global dev
-bin/ims_rtp_daemon:vendor/bin/ims_rtp_daemon|896a7d67d73f9c0ef0f48f86af0e055737c781df
-bin/imscmservice:vendor/bin/imscmservice|c606b123bdd105866947a9ae19aab05349ad2dfd
-bin/imsdatadaemon:vendor/bin/imsdatadaemon|2aa4067b74fe525411984f87666d81c5b6b575d3
-bin/imsqmidaemon:vendor/bin/imsqmidaemon|88886668eda7b7303b4a7aefd5b8b3fbffd81b02
-etc/permissions/imscm.xml|8b99ec26c783966bbea1fcb8e72c7c0206a4e802
-framework/imscmlibrary.jar|0c24d6540c06efede52169c1445272f43748180f
-framework/rcsimssettings.jar|566a0f637344ca3182aca33753e404977fc77ecc
--vendor/app/ims/ims.apk|0f9f714e31305dc293aa3e72ba19d24e8a6b11ae
--vendor/app/imssettings/imssettings.apk|cd206ecfdf8b9c738823104e13672707cb48ffd1
-vendor/lib64/lib-dplmedia.so|45de23a1bf2c758e71556b88fa01e1f705775b96
-vendor/lib64/lib-ims-rcscmjni.so|57a7cffdf589247b7fa38082418076e491b306ca
-vendor/lib64/lib-imsSDP.so|addec91cf24280784f619433e325bcb84ac11d5d
-vendor/lib64/lib-imscamera.so|ed32d843da1895fc83dfc1690d958591ab942b59
-vendor/lib64/lib-imsdpl.so|4b60872a3fec6322eb8b59ad615f1500e595a3d3
-vendor/lib64/lib-imsqimf.so|021edce0c81ba25d9b4510befd35768314858428
-vendor/lib64/lib-imsrcs.so|31fc1549c4a489489e20efda496567ee51e72ca9
-vendor/lib64/lib-imsrcscm.so|f783e1ea0dfa84392e92bd00d79b6be9fe4fdc1a
-vendor/lib64/lib-imsrcscmclient.so|5a24f31ed2bd8ebcca68583b2750c3fe9fc8a0b0
-vendor/lib64/lib-imsrcscmservice.so|3cbb7c5437eaea86fab6db8cddce05c3a0b15852
-vendor/lib64/lib-imss.so|f3bc1038d5720da58d1d1eb8e1ed6cec4ad93db4
-vendor/lib64/lib-imsvt.so|52d4ed0e15156e20adfb409eeb2a983108a1357b
-vendor/lib64/lib-imsxml.so|babc9429f0291038b6161b212935e03363d5d921
-vendor/lib64/lib-rcsimssjni.so|80faffa65b5060c208fd4bc0085eebf7615fbb3a
-vendor/lib64/lib-rtpcommon.so|16d49c1c1475a4fe9b3d2f7632bc4f199a87c4ce
-vendor/lib64/lib-rtpcore.so|7ebfa9d640984dbee4e5287a86883c991089497a
-vendor/lib64/lib-rtpdaemoninterface.so|f1f72a6a131830d3c71405362e975f61bb53386f
-vendor/lib64/lib-rtpsl.so|6a7f9f2fc38c210ffa9235bb0d61e18b6871a5dd
-vendor/lib64/libimscamera_jni.so|53000f12da581742742fbf80a2d46616d4b4283e
-vendor/lib64/libimsmedia_jni.so|35be419f4fabc1e2388c7cc01e95442f1f90e833
-vendor/lib64/librcc.so|661771f4b6c5f26037cc0fb5de83a86c08023995
-vendor/lib64/libvoice-svc.so|238f774a4d0748c40569f6c3c48a87578f79c265
 
 # Sensors - OxygenOS 3.6.0
 bin/sensors.qcom:vendor/bin/sensors.qcom

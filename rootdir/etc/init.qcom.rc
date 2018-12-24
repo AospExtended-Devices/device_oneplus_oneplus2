@@ -29,7 +29,6 @@ import /vendor/etc/init/hw/init.qcom.power.rc
 import /vendor/etc/init/hw/init.qcom.usb.rc
 
 on early-init
-    symlink /data/tombstones /tombstones
     mount debugfs debugfs /sys/kernel/debug
     chmod 0755 /sys/kernel/debug
 
@@ -52,8 +51,9 @@ on fs
 on init
     export LD_PRELOAD libshim_atomic.so
 
+    start program_bdaddr
+
     chmod 0644 /proc/cmdline
-    symlink /sdcard /storage/sdcard0
 
     # Set permissions for persist partition
     mkdir /persist 0771 system system
@@ -100,48 +100,44 @@ on init
     chown system system /sys/module/cpu_boost/parameters/sysctl_thermal_aware_scheduling
 
     # Touchscreen
-    chown root system /proc/touchpanel/double_swipe
+    chown system system /proc/touchpanel/double_swipe
     chmod 0660 /proc/touchpanel/double_swipe
-    chown root system /proc/touchpanel/double_tap
+    chown system system /proc/touchpanel/double_tap
     chmod 0660 /proc/touchpanel/double_tap
-    chown root system /proc/touchpanel/down_swipe
+    chown system system /proc/touchpanel/down_swipe
     chmod 0660 /proc/touchpanel/down_swipe
-    chown root system /proc/touchpanel/draw_circle
+    chown system system /proc/touchpanel/draw_circle
     chmod 0660 /proc/touchpanel/draw_circle
-    chown root system /proc/touchpanel/draw_left_v
+    chown system system /proc/touchpanel/draw_left_v
     chmod 0660 /proc/touchpanel/draw_left_v
-    chown root system /proc/touchpanel/draw_reversed_v
+    chown system system /proc/touchpanel/draw_reversed_v
     chmod 0660 /proc/touchpanel/draw_reversed_v
-    chown root system /proc/touchpanel/draw_right_v
+    chown system system /proc/touchpanel/draw_right_v
     chmod 0660 /proc/touchpanel/draw_right_v
-    chown root system /proc/touchpanel/draw_v
+    chown system system /proc/touchpanel/draw_v
     chmod 0660 /proc/touchpanel/draw_v
-    chown root system /proc/touchpanel/left_swipe
+    chown system system /proc/touchpanel/left_swipe
     chmod 0660 /proc/touchpanel/left_swipe
-    chown root system /proc/touchpanel/right_swipe
+    chown system system /proc/touchpanel/right_swipe
     chmod 0660 /proc/touchpanel/right_swipe
-    chown root system /proc/touchpanel/up_swipe
+    chown system system /proc/touchpanel/up_swipe
     chmod 0660 /proc/touchpanel/up_swipe
 
     # Buttons
-    chown root system /proc/s1302/key_rep
+    chown system system /proc/s1302/key_rep
     chmod 0660 /proc/s1302/key_rep
 
-    chown root system /proc/s1302/virtual_key
+    chown system system /proc/s1302/virtual_key
     chmod 0660 /proc/s1302/virtual_key
 
-    chown root system /proc/tri-state-key/keyCode_top
+    chown system system /proc/tri-state-key/keyCode_top
     chmod 0660 /proc/tri-state-key/keyCode_top
 
-    chown root system /proc/tri-state-key/keyCode_middle
+    chown system system /proc/tri-state-key/keyCode_middle
     chmod 0660 /proc/tri-state-key/keyCode_middle
 
-    chown root system /proc/tri-state-key/keyCode_bottom
+    chown system system /proc/tri-state-key/keyCode_bottom
     chmod 0660 /proc/tri-state-key/keyCode_bottom
-
-    # PCC Calibration
-    chown system system /sys/devices/virtual/graphics/fb0/rgb
-    chmod 0660 /sys/devices/virtual/graphics/fb0/rgb
 
     # for product mode flashlight
     chown system system /proc/qcom_flash
@@ -170,10 +166,6 @@ on init
     write /proc/sys/vm/dirty_ratio 15
     write /proc/sys/vm/dirty_background_ratio 1
 
-    # Modify for drv2605 support
-    chmod 0666 /dev/drv2605
-    chown system system /dev/drv2605
-
 on early-boot
     # set RLIMIT_MEMLOCK to 64MB
     setrlimit 8 67108864 67108864
@@ -192,7 +184,7 @@ on boot
     # add a cpuset for the camera daemon
     # we want all the little cores for camera
     mkdir /dev/cpuset/camera-daemon
-    write /dev/cpuset/camera-daemon/cpus 0
+    write /dev/cpuset/camera-daemon/cpus 0-3
     write /dev/cpuset/camera-daemon/mems 0
     chown system system /dev/cpuset/camera-daemon
     chown system system /dev/cpuset/camera-daemon/tasks
@@ -204,7 +196,7 @@ on boot
     write /dev/cpuset/background/cpus 0
     write /dev/cpuset/system-background/cpus 0-2
     write /dev/cpuset/top-app/cpus 0-7
-    write /dev/cpuset/camera-daemon/cpus 0-3
+    write /dev/cpuset/restricted/cpus 0-3
 
     start rmt_storage
     start rfs_access
@@ -259,7 +251,7 @@ on boot
 
     # Assign TCP buffer thresholds to be ceiling value of technology maximums
     # Increased technology maximums should be reflected here.
-    write /proc/sys/net/core/rmem_max  8388608
+    write /proc/sys/net/core/rmem_max  16777216
     write /proc/sys/net/core/wmem_max  8388608
 
     # To prevent out of order acknowledgements from making
@@ -321,11 +313,6 @@ on boot
     # Allow access for CCID command/response timeout configuration
     chown system system /sys/module/ccid_bridge/parameters/bulk_msg_timeout
 
-    # Mark the copy complete flag to not completed
-    write /data/misc/radio/copy_complete 0
-    chown radio radio /data/misc/radio/copy_complete
-    chmod 0660 /data/misc/radio/copy_complete
-
     # Wifi firmware reload path
     chown wifi wifi /sys/module/wlan/parameters/fwpath
 
@@ -377,6 +364,11 @@ on post-fs-data
     mkdir /data/misc/audio/acdbdata 0770 media audio
     mkdir /data/misc/audio/acdbdata/delta 0770 media audio
 
+    # Mark the copy complete flag to not completed
+    write /data/misc/radio/copy_complete 0
+    chown radio radio /data/misc/radio/copy_complete
+    chmod 0660 /data/misc/radio/copy_complete
+
     # Create directory used by the DASH client
     mkdir /data/misc/dash 0770 media audio
 
@@ -403,33 +395,12 @@ on post-fs-data
     mkdir /data/system 0775 system system
     #symlink /data/misc/wifi/wpa_supplicant /data/system/wpa_supplicant
 
-    # Create directories for Location services
-    mkdir /data/misc/location 0770 gps gps
-    mkdir /data/misc/location/mq 0770 gps gps
-    mkdir /data/misc/location/xtwifi 0770 gps gps
-    mkdir /data/misc/location/gpsone_d 0770 system gps
-    mkdir /data/misc/location/quipc 0770 gps system
-    mkdir /data/misc/location/gsiff 0770 gps gps
-
-    # Create directory from IMS services
-    mkdir /data/shared 0755
-    chown system system /data/shared
-
     # Create directory for FOTA
     mkdir /data/fota 0771
     chown system system /data/fota
 
     # Create /data/time folder for time-services
-    mkdir /data/time/ 0700 system system
-
-    mkdir /data/audio/ 0770 media audio
-
-    # Create a folder for audio delta files
-    mkdir /data/audio/acdbdata 0770 media audio
-    mkdir /data/audio/acdbdata/delta 0770 media audio
-
-    # Create a folder for SRS to be able to create a usercfg file
-    mkdir /data/data/media 0770 media media
+    mkdir /data/time 0700 system system
 
     # Create PERFD deamon related dirs
     mkdir /data/misc/perfd 0755 root system
@@ -466,7 +437,7 @@ service qseecomd /system/vendor/bin/qseecomd
     class core
     user root
     group root
-    writepid /dev/cpuset/system-background/tasks
+    writepid /dev/cpuset/foreground/tasks
 
 service perfd /system/vendor/bin/perfd
     class main
@@ -513,37 +484,7 @@ service adsprpcd /system/vendor/bin/adsprpcd
     class main
     user media
     group media
-
-service imsqmidaemon /system/vendor/bin/imsqmidaemon
-    class main
-    user system
-    socket ims_qmid stream 0660 system radio
-    group radio log diag
-
-service imsdatadaemon /system/vendor/bin/imsdatadaemon
-    class main
-    user system
-    socket ims_datad stream 0660 system radio
-    group system wifi radio inet log diag
-    disabled
-
-on property:sys.ims.QMI_DAEMON_STATUS=1
-    start imsdatadaemon
-
-service ims_rtp_daemon /system/vendor/bin/ims_rtp_daemon
-   class main
-   user system
-   socket ims_rtpd stream 0660 system radio
-   group radio diag inet log
-   disabled
-
-on property:sys.ims.DATA_DAEMON_STATUS=1
-    start ims_rtp_daemon
-
-service imscmservice /system/vendor/bin/imscmservice
-   class main
-   user system
-   group radio diag log
+    writepid /dev/cpuset/system-background/tasks
 
 service energy-awareness /system/vendor/bin/energy-awareness
     class main
@@ -588,6 +529,7 @@ service ppd /system/vendor/bin/mm-pp-daemon
     user system
     socket pps stream 0660 system system
     group system graphics
+    writepid /dev/cpuset/system-background/tasks
 
 on property:vold.decrypt=trigger_restart_framework
     start config_bluetooth
@@ -614,30 +556,19 @@ service rfs_access /system/vendor/bin/rfs_access
     group system net_raw
     writepid /dev/cpuset/system-background/tasks
 
-on property:wc_transport.start_hci=true
+on property:vendor.wc_transport.start_hci=true
     start start_hci_filter
 
-on property:wc_transport.start_hci=false
+on property:vendor.wc_transport.start_hci=false
     stop start_hci_filter
 
 # begin qrd patch for bluetoot cts test 2015 06 23 zuoyonghua@oneplus.cn
 service start_hci_filter /system/vendor/bin/wcnss_filter
     class late_start
     user bluetooth
-    group bluetooth oem_2950
+    group bluetooth oem_2950 system wakelock
     disabled
-
-on property:wc_transport.start_root=true
-    start hci_filter_root
-
-on property:wc_transport.start_root=false
-    stop hci_filter_root
-
-service hci_filter_root /system/vendor/bin/wcnss_filter
-    class late_start
-    user bluetooth
-    group bluetooth oem_2950 system
-    disabled
+    writepid /dev/cpuset/system-background/tasks
 
 service config_bluetooth /vendor/bin/init.qcom.bt.sh "onboot"
     class core
@@ -653,11 +584,11 @@ service hciattach /vendor/bin/init.qcom.bt.sh
     seclabel u:r:bluetooth_loader:s0
     oneshot
 
-on property:bluetooth.hciattach=true
+on property:vendor.bluetooth.hciattach=true
     start hciattach
 
-on property:bluetooth.hciattach=false
-    setprop bluetooth.status off
+on property:vendor.bluetooth.hciattach=false
+    setprop vendor.bluetooth.status off
 
 service bt-dun /system/bin/dun-server /dev/smd7 /dev/rfcomm0
     class late_start
@@ -778,11 +709,6 @@ service ftm_ffbm /system/bin/ftmdaemon
 
 service cnss-daemon /system/vendor/bin/cnss-daemon -n -l
     class late_start
-
-service loc_launcher /system/vendor/bin/loc_launcher
-    #loc_launcher will start as root and set its uid to gps
-    class late_start
-    group gps inet net_raw oem_2950 net_admin wifi
     writepid /dev/cpuset/system-background/tasks
 
 service drmdiag /system/bin/drmdiagapp
@@ -801,14 +727,6 @@ service qcom-sh /vendor/bin/init.qcom.sh
     class late_start
     user root
     oneshot
-
-service ims_regmanager /system/bin/exe-ims-regmanagerprocessnative
-    class late_start
-    group net_bt_admin inet radio wifi
-    disabled
-
-on property:persist.ims.regmanager.mode=1
-    start ims_regmanager
 
 service battery_monitor /system/bin/battery_monitor
     user system
@@ -866,3 +784,10 @@ service msm_irqbalance /system/vendor/bin/msm_irqbalance -f /system/vendor/etc/m
     group root
     disabled
     writepid /dev/cpuset/system-background/tasks
+
+service program_bdaddr /system/vendor/bin/init.program_bdaddr.sh
+    user bluetooth
+    group bluetooth
+    seclabel u:r:bluetooth_loader:s0
+    disabled
+    oneshot

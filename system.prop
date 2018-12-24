@@ -1,50 +1,43 @@
 # system.prop for OnePlus2
 
 # Audio
-audio_hal.period_size=192
+vendor.audio_hal.period_size=192
 audio.offload.video=true
-persist.audio.fluence.voicecall=true
-persist.audio.fluence.voicerec=false
-persist.audio.fluence.speaker=true
-ro.qc.sdk.audio.fluencetype=fluence
-ro.qc.sdk.audio.ssr=false
+persist.vendor.audio.fluence.voicecall=true
+persist.vendor.audio.fluence.voicerec=false
+persist.vendor.audio.fluence.speaker=true
+ro.vendor.audio.sdk.fluencetype=fluence
+ro.vendor.audio.sdk.ssr=false
 persist.audio.ssr.3mic=false
 media.aac_51_output_enabled=true
-audio.offload.pcm.16bit.enable=false
+audio.offload.pcm.16bit.enable=true
 audio.offload.pcm.24bit.enable=true
-use.voice.path.for.pcm.voip=true
-audio.offload.multiple.enabled=true
-audio.offload.gapless.enabled=true
+vendor.voice.path.for.pcm.voip=true
+vendor.audio.offload.multiple.enabled=true
+vendor.audio.offload.gapless.enabled=true
 mm.enable.smoothstreaming=true
-audio.offload.buffer.size.kb=64
-tunnel.audio.encode=false
+vendor.audio.offload.buffer.size.kb=64
+vendor.tunnel.audio.encode=false
 audio.offload.passthrough=false
 audio.deep_buffer.media=true
 audio.offload.min.duration.secs=30
+ro.config.media_vol_steps=25
+ro.config.vc_call_vol_steps=7
 
 # Bluetooth
 bluetooth.enable_timeout_ms=12000
-bluetooth.hfp.client=1
-bt.max.hfpclient.connections=1
-qcom.bluetooth.soc=rome
-ro.bluetooth.a4wp=true
-ro.bluetooth.emb_wp_mode=true
-ro.bluetooth.wipower=true
+vendor.qcom.bluetooth.soc=rome
 
 # Camera
-camera.disable_zsl_mode=1
+camera.disable.zsl_mode=true
 persist.camera.HAL3.enabled=1
-persist.camera.hal.debug.mask=0
-persist.camera.raw.format=16
-persist.camera.zsl.mode=0
-persist.camera.tintless=enable
 
 # CEC
 ro.hdmi.device_type=4
 persist.sys.hdmi.addr.playback=4
 ro.hdmi.enable=true
-persist.speaker.prot.enable=false
-persist.spkr.cal.duration=0
+persist.vendor.audio.speaker.prot.enable=false
+persist.vendor.audio.spkr.cal.duration=0
 qcom.hw.aac.encoder=true
 
 # CNE
@@ -64,12 +57,6 @@ dalvik.vm.boot-dex2oat-threads=4
 dalvik.vm.dex2oat-threads=2
 dalvik.vm.image-dex2oat-threads=4
 
-# GPS
-persist.gps.qc_nlp_in_use=1
-persist.loc.nlp_name=com.qualcomm.location
-ro.gps.agps_provider=1
-ro.pip.gated=0
-
 # Graphics
 dev.pm.dyn_samplingrate=1
 persist.demo.hdmirotationlock=false
@@ -83,11 +70,6 @@ persist.metadata_dynfps.disable=true
 ro.opengles.version=196610
 ro.qualcomm.cabl=0
 ro.sf.lcd_density=480
-
-# IMS
-persist.dbg.ims_volte_enable=1
-persist.dbg.volte_avail_ovr=1
-persist.dbg.vt_avail_ovr=1
 
 # OEM Unlocking
 ro.oem_unlock_supported=1
@@ -143,6 +125,3 @@ ro.qc.sdk.camera.facialproc=false
 
 # Time services
 persist.timed.enable=true
-
-# Wifi
-persist.data.iwlan.enable=true

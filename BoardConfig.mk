@@ -103,12 +103,14 @@ QCOM_BT_USE_BTNV := true
 TARGET_NEEDS_PLATFORM_TEXT_RELOCATIONS := true
 BOARD_QTI_CAMERA_32BIT_ONLY := true
 USE_DEVICE_SPECIFIC_CAMERA := true
+TARGET_PROCESS_SDK_VERSION_OVERRIDE := \
+    /system/vendor/bin/mm-qcamera-daemon=22
 
 # Charger
 BOARD_CHARGER_DISABLE_INIT_BLANK := true
 
 # Lineage Hardware
-BOARD_HARDWARE_CLASS += $(PLATFORM_PATH)/lineagehw
+JAVA_SOURCE_OVERLAYS := org.lineageos.hardware|$(PLATFORM_PATH)/lineagehw|**/*.java
 TARGET_TAP_TO_WAKE_NODE := "/proc/touchpanel/double_tap"
 
 # Filesystem
@@ -120,16 +122,15 @@ USE_DEVICE_SPECIFIC_GPS := true
 
 # Graphics
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
+TARGET_ADDITIONAL_GRALLOC_10_USAGE_BITS := 0x02000000U
 TARGET_USES_ION := true
 TARGET_USES_NEW_ION_API :=true
 TARGET_USES_C2D_COMPOSITION := true
 TARGET_USES_HWC2 := true
-USE_OPENGL_RENDERER := true
 
 MAX_EGL_CACHE_KEY_SIZE := 12*1024
 MAX_EGL_CACHE_SIZE := 2048*1024
 
-HAVE_ADRENO_SOURCE := false
 OVERRIDE_RS_DRIVER := libRSDriver_adreno.so
 
 VSYNC_EVENT_PHASE_OFFSET_NS := 2000000
@@ -149,9 +150,6 @@ TARGET_PLATFORM_DEVICE_BASE := /devices/soc.0/
 # Keystore
 TARGET_PROVIDES_KEYMASTER := true
 
-# Lights
-TARGET_PROVIDES_LIBLIGHT := true
-
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE := 67108864
 BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := f2fs
@@ -162,9 +160,10 @@ BOARD_USERDATAIMAGE_PARTITION_SIZE := 59047394304
 BOARD_FLASH_BLOCK_SIZE := 262144
 TARGET_USERIMAGES_USE_EXT4 := true
 TARGET_USERIMAGES_USE_F2FS := true
+TARGET_USES_MKE2FS := true
 
 # Power
-TARGET_HAS_NO_WIFI_STATS := true
+TARGET_HAS_NO_WLAN_STATS := true
 TARGET_RPM_SYSTEM_STAT := /d/rpm_stats
 TARGET_USES_INTERACTION_BOOST := true
 
@@ -172,17 +171,12 @@ TARGET_USES_INTERACTION_BOOST := true
 BOARD_USES_QCOM_HARDWARE := true
 
 # SELinux
-include device/qcom/sepolicy/sepolicy.mk
-include device/qcom/sepolicy/legacy-sepolicy.mk
+include device/qcom/sepolicy-legacy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += $(PLATFORM_PATH)/sepolicy
 
 # Shims
 TARGET_LD_SHIM_LIBS := \
-    /system/vendor/lib64/lib-imsvt.so|libshims_ims.so \
     /system/vendor/lib64/libril-qc-qmi-1.so|rild_socket.so
-
-# VR
-USE_DEVICE_SPECIFIC_VR := true
 
 # Wifi
 BOARD_HAS_QCOM_WLAN := true
@@ -211,4 +205,4 @@ endif
 TARGET_RECOVERY_FSTAB := $(PLATFORM_PATH)/rootdir/etc/fstab.qcom
 
 # inherit from the proprietary version
--include vendor/oneplus/oneplus2/BoardConfigVendor.mk
+include vendor/oneplus/oneplus2/BoardConfigVendor.mk

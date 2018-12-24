@@ -14,10 +14,12 @@
 # limitations under the License.
 #
 
-$(call inherit-product-if-exists, vendor/oneplus/oneplus2/oneplus2-vendor.mk)
+$(call inherit-product, vendor/oneplus/oneplus2/oneplus2-vendor.mk)
 
 # Overlays
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
+
+PRODUCT_ENFORCE_RRO_TARGETS := framework-res
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -43,7 +45,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
-    frameworks/native/data/etc/android.hardware.vr.high_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vr.high_performance.xml \
     frameworks/native/data/etc/android.hardware.vulkan.level-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.level.xml \
     frameworks/native/data/etc/android.hardware.vulkan.version-1_0_3.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.version.xml \
     frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
@@ -75,6 +76,7 @@ PRODUCT_PACKAGES += \
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@2.0-impl \
+    android.hardware.audio@2.0-service \
     android.hardware.audio.effect@2.0-impl \
     android.hardware.soundtrigger@2.0-impl
 
@@ -101,7 +103,8 @@ PRODUCT_COPY_FILES += \
 
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.0-impl
+    android.hardware.bluetooth@1.0-impl \
+    android.hardware.bluetooth@1.0-service
 
 PRODUCT_PACKAGES += \
     libbt-vendor
@@ -113,7 +116,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     camera.msm8994 \
-    mm-qcamera-app \
     libmmcamera_interface \
     libmmjpeg_interface \
     libqomx_core \
@@ -123,15 +125,18 @@ PRODUCT_PACKAGES += \
 
 # DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.0-impl
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service
 
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@2.0-impl \
     android.hardware.graphics.allocator@2.0-service \
     android.hardware.graphics.composer@2.1-impl \
+    android.hardware.graphics.composer@2.1-service \
     android.hardware.graphics.mapper@2.0-impl \
-    android.hardware.memtrack@1.0-impl
+    android.hardware.memtrack@1.0-impl \
+    android.hardware.memtrack@1.0-service
 
 PRODUCT_PACKAGES += \
     copybit.msm8994 \
@@ -161,7 +166,8 @@ PRODUCT_PACKAGES += \
 
 # Gatekeeper
 PRODUCT_PACKAGES += \
-    android.hardware.gatekeeper@1.0-impl
+    android.hardware.gatekeeper@1.0-impl \
+    android.hardware.gatekeeper@1.0-service
 
 # GPS
 PRODUCT_PACKAGES += \
@@ -172,20 +178,16 @@ PRODUCT_PACKAGES += \
     flp.conf \
     gps.conf \
     izat.conf \
-    lowi.conf \
-    quipc.conf \
-    sap.conf \
-    xtwifi.conf
+    sap.conf
+
+# HIDL
+PRODUCT_PACKAGES += \
+    android.hidl.manager@1.0-java
 
 # IPv6
 PRODUCT_PACKAGES += \
     ebtables \
     ethertypes
-
-# IMS
-PRODUCT_PACKAGES += \
-    ims-ext-common \
-    libshims_ims
 
 # IRQ Balance
 PRODUCT_COPY_FILES += \
@@ -202,7 +204,8 @@ PRODUCT_COPY_FILES += \
 
 # Keymaster
 PRODUCT_PACKAGES += \
-    android.hardware.keymaster@3.0-impl
+    android.hardware.keymaster@3.0-impl \
+    android.hardware.keymaster@3.0-service
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -226,30 +229,24 @@ PRODUCT_COPY_FILES += \
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
-    libdashplayer \
-    libextmedia_jni \
     libOmxAacEnc \
     libOmxAmrEnc \
     libOmxCore \
     libOmxEvrcEnc \
     libOmxQcelp13Enc \
-    libOmxSwVencMpeg4 \
-    libOmxSwVencHevc \
     libOmxVdec \
-    libOmxVdecHevc \
     libOmxVenc \
-    libOmxVidcCommon \
-    libstagefrighthw \
-    libstagefright_soft_flacdec
+    libstagefrighthw
 
 # Power
 PRODUCT_PACKAGES += \
-    android.hardware.power@1.0-service-qti
+    android.hardware.power@1.1-service-qti
 
 # Ramdisk
 PRODUCT_PACKAGES += \
     fstab.qcom \
     init.oneplus2.power.sh \
+    init.program_bdaddr.sh \
     init.qcom.bt.sh \
     init.qcom.power.rc \
     init.qcom.rc \
@@ -274,9 +271,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@1.0-impl
 
-PRODUCT_PACKAGES += \
-    sensors.ssc.wrapper
-
 # Seccomp
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/seccomp/mediacodec.policy:$(TARGET_COPY_OUT_VENDOR)/etc/seccomp_policy/mediacodec.policy \
@@ -297,18 +291,14 @@ PRODUCT_BOOT_JARS += \
 
 # TextClassifier
 PRODUCT_PACKAGES += \
-    textclassifier.smartselection.bundle1
+    textclassifier.bundle1
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.0-service.op2
+    android.hardware.usb@1.0-service.basic
 
 PRODUCT_PACKAGES += \
     com.android.future.usb.accessory
-
-# VR
-PRODUCT_PACKAGES += \
-    vr.msm8994
 
 # Vibrator
 PRODUCT_PACKAGES += \

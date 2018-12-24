@@ -7,6 +7,12 @@ value:2951
 [AID_VENDOR_RFS_SHARED]
 value:2952
 
+[system/vendor/bin/btnvtool]
+mode: 0755
+user: AID_BLUETOOTH
+group: AID_BLUETOOTH
+caps: 0
+
 [system/vendor/bin/wcnss_filter]
 mode: 0755
 user: AID_BLUETOOTH
@@ -23,16 +29,4 @@ caps: NET_BIND_SERVICE
 mode: 0755
 user: AID_SYSTEM
 group: AID_SYSTEM
-caps: NET_BIND_SERVICE
-
-[system/vendor/bin/imsdatadaemon]
-mode: 0755
-user: AID_SYSTEM
-group: AID_SYSTEM
-caps: NET_BIND_SERVICE
-
-[system/vendor/bin/ims_rtp_daemon]
-mode: 0755
-user: AID_SYSTEM
-group: AID_RADIO
 caps: NET_BIND_SERVICE
