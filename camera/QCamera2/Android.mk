@@ -71,9 +71,9 @@ LOCAL_HEADER_LIBRARIES := generated_kernel_headers
 
 #LOCAL_STATIC_LIBRARIES := libqcamera2_util
 LOCAL_C_INCLUDES += \
-        hardware/qcom/display/msm8994/libgralloc
+        hardware/qcom/display-caf/msm8994/libgralloc
 LOCAL_C_INCLUDES += \
-        hardware/qcom/display/msm8994/libqdutils
+        hardware/qcom/display-caf/msm8994/libqdutils
 
 LOCAL_SHARED_LIBRARIES := liblog libcamera_client liblog libhardware libutils libcutils libdl
 LOCAL_SHARED_LIBRARIES += libmmcamera_interface libmmjpeg_interface libui libcamera_metadata
