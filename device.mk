@@ -116,9 +116,6 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_PACKAGES += \
     camera.msm8994 \
-    libmmcamera_interface \
-    libmmjpeg_interface \
-    libqomx_core \
     libshim_atomic \
     sensors.hal.tof \
     Snap
@@ -276,14 +273,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     init.tfa.sh \
     tinyplay
-
-# Telephony
-PRODUCT_PACKAGES += \
-    qti-telephony-common \
-    telephony-ext
-
-PRODUCT_BOOT_JARS += \
-    telephony-ext
 
 # TextClassifier
 PRODUCT_PACKAGES += \
