@@ -140,8 +140,14 @@ get-set-forall  /sys/class/devfreq/qcom,mincpubw.*/governor cpufreq
 # Disable sched_boost
 write /proc/sys/kernel/sched_boost 0
 
-# change GPU initial power level from 305MHz(level 4) to 180MHz(level 5) for power savings
-write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 5
+# change GPU initial power level to 110MHz(level 7) for power savings
+write /sys/class/kgsl/kgsl-3d0/default_pwrlevel 7
+
+# set GPU max power level
+write /sys/class/kgsl/kgsl-3d0/max_pwrlevel 0
+
+# set GPU minimum frequency
+write /sys/class/kgsl/kgsl-3d0/devfreq/min_freq 27000000
 
 # set GPU default governor to msm-adreno-tz
 write /sys/class/devfreq/fdb00000.qcom,kgsl-3d0/governor msm-adreno-tz
