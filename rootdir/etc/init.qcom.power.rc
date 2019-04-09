@@ -28,3 +28,17 @@ service charger /charger
 
 on property:dev.bootcomplete=1
     setprop sys.io.scheduler "cfq"
+
+    # MSM Simple Thermal
+    write /sys/module/msm_thermal/core_control/enabled 0   
+    write /sys/kernel/msm_thermal/zone0 "1555200 1536000 50 48"
+    write /sys/kernel/msm_thermal/zone1 "1478400 1536000 51 50"
+    write /sys/kernel/msm_thermal/zone2 "1478400 1440000 52 51"
+    write /sys/kernel/msm_thermal/zone3 "1344000 1440000 53 52"
+    write /sys/kernel/msm_thermal/zone4 "1344000 1344000 54 53"
+    write /sys/kernel/msm_thermal/zone5 "1248000 1344000 56 54"
+    write /sys/kernel/msm_thermal/zone6 "960000 1248000 58 56"
+    write /sys/kernel/msm_thermal/zone7 "960000 960000 63 60"
+    write /sys/kernel/msm_thermal/zone8 "768000 768000 75 70"
+    write /sys/kernel/msm_thermal/sampling_ms 8000
+    write /sys/kernel/msm_thermal/enabled 1
