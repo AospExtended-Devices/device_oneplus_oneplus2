@@ -28,7 +28,7 @@ $(call inherit-product, vendor/aosp/common.mk)
 TARGET_BOOT_ANIMATION_RES := 1080
 
 PRODUCT_NAME := aosp_oneplus2
-PRODUCT_DEVICE := OnePlus2
+PRODUCT_DEVICE := oneplus2
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_BRAND := OnePlus
 
