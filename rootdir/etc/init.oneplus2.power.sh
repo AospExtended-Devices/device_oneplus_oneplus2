@@ -64,29 +64,31 @@ restorecon -R /sys/devices/system/cpu # must restore after interactive
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_sched_load 1
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/use_migration_notif 1
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/above_hispeed_delay 19000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 99
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/go_hispeed_load 200
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 960000
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/hispeed_freq 384000
 write /sys/devices/system/cpu/cpu0/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "65 460000:75 960000:80"
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 40000
-write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 80000
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/target_loads "95 460800:20 600000:35 672000:52 768000:66 864000:79 960000:92 1248000:96 1344000:98 1478400:99 1555200:100"
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/min_sample_time 60000
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/max_freq_hysteresis 0
 write /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq 384000
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack -1
 
 # configure governor settings for big cluster
 write /sys/devices/system/cpu/cpu4/cpufreq/scaling_governor interactive
 restorecon -R /sys/devices/system/cpu # must restore after interactive
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_sched_load 1
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/use_migration_notif 1
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 19000
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 99
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 20000
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 1248000
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/above_hispeed_delay 40000
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/go_hispeed_load 200
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/timer_rate 40000
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/hispeed_freq 384000
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/io_is_busy 1
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "70 960000:80 1248000:85"
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/target_loads "24 480000:16 633600:29 768000:40 864000:52 960000:63 1248000:71 1344000:80 1440000:88 1536000:94 1632000:97 1728000:98 1824000:99 1958400:100"
 write /sys/devices/system/cpu/cpu4/cpufreq/interactive/min_sample_time 40000
-write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 80000
+write /sys/devices/system/cpu/cpu4/cpufreq/interactive/max_freq_hysteresis 0
 write /sys/devices/system/cpu/cpu4/cpufreq/scaling_min_freq 384000
+write /sys/devices/system/cpu/cpu0/cpufreq/interactive/timer_slack -1
 
 # plugin remaining A57s
 write /sys/devices/system/cpu/cpu5/online 1
